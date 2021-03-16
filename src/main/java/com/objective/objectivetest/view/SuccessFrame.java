@@ -1,5 +1,8 @@
 package com.objective.objectivetest.view;
 
+import com.objective.objectivetest.utils.BeanUtils;
+import org.jboss.jandex.Main;
+
 import javax.swing.*;
 import java.awt.event.*;
 
@@ -46,8 +49,7 @@ public class SuccessFrame extends JDialog {
     }
 
     private void onOK() {
-        // add your code here
-        dispose();
+        BeanUtils.getBean(MainFrame.class).setVisible(true);
     }
 
     private void onCancel() {
