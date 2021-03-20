@@ -37,7 +37,6 @@ class QuestionRepositoryTest {
 
     @Test()
     void add() {
-        String mainOptionText = "Text";
         var optionIfFalse =
                 QuestionEntity.builder().option("any_option").build();
         var optionIfTrue =

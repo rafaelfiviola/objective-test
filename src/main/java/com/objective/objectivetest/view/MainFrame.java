@@ -45,7 +45,5 @@ public class MainFrame extends JFrame {
 
     private void onOK() {
         new QuestionFrame(this.questionService.findFirst());
-        dispose();
     }
-
 }

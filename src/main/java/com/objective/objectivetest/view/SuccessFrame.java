@@ -1,7 +1,6 @@
 package com.objective.objectivetest.view;
 
 import com.objective.objectivetest.utils.BeanUtils;
-import org.jboss.jandex.Main;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -25,11 +24,7 @@ public class SuccessFrame extends JDialog {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
-        buttonOK.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onOK();
-            }
-        });
+        buttonOK.addActionListener(e -> onOK());
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
@@ -39,18 +34,17 @@ public class SuccessFrame extends JDialog {
         });
 
         // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener() {
-                                               public void actionPerformed(ActionEvent e) {
-                                                   onCancel();
-                                               }
-                                           }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
+        contentPane.registerKeyboardAction(
+                e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
                 JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
     }
 
     private void onOK() {
         BeanUtils.getBean(MainFrame.class).setVisible(true);
+        dispose();
     }
+
 
     private void onCancel() {
         // add your code here if necessary
