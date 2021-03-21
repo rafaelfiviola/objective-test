@@ -32,7 +32,6 @@ class QuestionRepositoryTest {
 
     @Test()
     void addsToDb() {
-//        var questionRepository.save(new QuestionEntity());
     }
 
     @Test()

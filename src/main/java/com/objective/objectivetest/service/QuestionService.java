@@ -55,13 +55,15 @@ public class QuestionService {
 
         this.questionRepository.save(newOption);
 
+        var isFalseLeaf = falseOption.equals(parentQuestion.getIfFalseNext());
+
         var newQuestion = QuestionEntity.builder()
                 .option(newQuestionText)
                 .ifFalseNext(falseOption)
                 .ifTrueNext(newOption)
                 .build();
 
-        if (falseOption.equals(parentQuestion.getIfFalseNext())) {
+        if (isFalseLeaf) {
             parentQuestion.setIfFalseNext(newQuestion);
         } else {
             parentQuestion.setIfTrueNext(newQuestion);
@@ -69,5 +71,7 @@ public class QuestionService {
 
         this.questionRepository.save(newQuestion);
         this.questionRepository.save(parentQuestion);
+        var list = this.questionRepository.findAll();
+        System.out.println(list);
     }
 }

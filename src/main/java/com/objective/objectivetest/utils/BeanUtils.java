@@ -20,5 +20,4 @@ public class BeanUtils implements ApplicationContextAware {
             BeansException {
         context = applicationContext;
     }
-
 }
