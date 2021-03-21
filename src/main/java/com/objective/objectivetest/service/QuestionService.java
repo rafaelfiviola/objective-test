@@ -15,7 +15,6 @@ public class QuestionService {
     @Autowired
     QuestionService(QuestionRepository questionRepository) {
         this.questionRepository = questionRepository;
-
         var lasanha = questionRepository.save(
                 QuestionEntity.builder()
                         .option("Lasanha")
@@ -24,13 +23,12 @@ public class QuestionService {
                 QuestionEntity.builder()
                         .option("Bolo De Chocolate")
                         .build());
-        var massa = questionRepository.save(
+        this.firstQuestion = questionRepository.save(
                 QuestionEntity.builder()
                         .option("Massa")
                         .ifTrueNext(lasanha)
                         .ifFalseNext(boloDeChocolate)
                         .build());
-        this.firstQuestion = massa;
     }
 
     public QuestionEntity add(QuestionEntity qe) {
@@ -45,13 +43,16 @@ public class QuestionService {
         return questionRepository.findById(3).orElse(null);
     }
 
-    public void insert(QuestionEntity falseOption, String newQuestionText,
+    public void insert(QuestionEntity falseOption,
+                       String newQuestionText,
                        String newOptionText) {
+
         var parentQuestion = questionRepository.getParent(falseOption);
 
         var newOption = QuestionEntity.builder()
                 .option(newOptionText)
                 .build();
+
         this.questionRepository.save(newOption);
 
         var newQuestion = QuestionEntity.builder()
@@ -60,11 +61,13 @@ public class QuestionService {
                 .ifTrueNext(newOption)
                 .build();
 
-        parentQuestion.setIfFalseNext(newQuestion);
+        if (falseOption.equals(parentQuestion.getIfFalseNext())) {
+            parentQuestion.setIfFalseNext(newQuestion);
+        } else {
+            parentQuestion.setIfTrueNext(newQuestion);
+        }
 
         this.questionRepository.save(newQuestion);
         this.questionRepository.save(parentQuestion);
-        var list =this.questionRepository.findAll();
-        System.out.println(list);
     }
 }
